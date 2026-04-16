@@ -84,9 +84,9 @@ class STTS: NSObject, ObservableObject, AVSpeechSynthesizerDelegate {
     // MARK: - Audio pipeline (VP + transcriber)
 
     private func startAudio() async throws {
-        let transcriber = SpeechTranscriber(
+        let transcriber = DictationTranscriber(
             locale: Locale(identifier: "en-US"),
-            preset: .progressiveTranscription
+            preset: .progressiveShortDictation
         )
 
         let modules: [any SpeechModule] = [transcriber]
@@ -213,7 +213,7 @@ class STTS: NSObject, ObservableObject, AVSpeechSynthesizerDelegate {
     // MARK: - Transcriber (continuous, also used for interruption)
 
     private func handleTranscriber(
-        _ transcriber: SpeechTranscriber
+        _ transcriber: DictationTranscriber
     ) async {
         do {
             for try await result in transcriber.results {
